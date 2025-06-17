@@ -6,6 +6,7 @@
 #include <raymath.h>
 
 #include "constants.h"
+#include "asset_manager.h"
 #include "game_object.h"
 
 namespace bts

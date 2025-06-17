@@ -1,0 +1,8 @@
+[
+    { "BACKGROUND": "graphics/background.png" },
+    { "PLAYER_LEFT": "graphics/player/fox_plane_2.png" },
+    { "PLAYER_STRAIGHT": "graphics/player/fox_plane_1.png" },
+    { "PLAYER_RIGHT": "graphics/player/fox_plane_3.png" },
+    { "PLAYER_BULLET": "graphics/bullet.png" },
+    { "ENEMY_STRAIGHT": "graphics/dog_plane.png" }
+]

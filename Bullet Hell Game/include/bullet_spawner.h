@@ -11,13 +11,8 @@ namespace bts
 {
     class BulletSpawner : public Spawner<Bullet> {
     public:
-        BulletSpawner(const std::string& file_path, float spawn_interval, const std::string& sound_path = std::string(), float sound_volume = 1.0f);
-
-        virtual void Draw() const override;
-        virtual void UnLoad() override;
-
+        BulletSpawner(float spawn_interval, const std::string& sound_path = std::string(), float sound_volume = 1.0f);
     private:
-        Texture2D texture;
     };
 }
 

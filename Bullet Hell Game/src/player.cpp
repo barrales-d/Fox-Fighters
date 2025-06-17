@@ -13,13 +13,11 @@ static constexpr int PLAYER_ASSET_LEAN_RIGHT = 2;
 
 namespace bts
 {
-    Player::Player(const std::string player_paths[PLAYER_ASSET_LENGTH], const std::string& bullet_path, const std::string& bullet_sound_path, float bullet_sound_volume) :
+    Player::Player(const std::string& bullet_sound_path, float bullet_sound_volume) :
         GameObject(start_position, start_velocity, Hitbox::CIRCLE, Hitbox::HBData(hitbox_radius)),
-        bullet_spawner(bullet_path, bullet_fire_rate, bullet_sound_path, bullet_sound_volume) {
-        textures.push_back(LoadTexture(player_paths[PLAYER_ASSET_DEFAULT].c_str()));
-        textures.push_back(LoadTexture(player_paths[PLAYER_ASSET_LEAN_LEFT].c_str()));
-        textures.push_back(LoadTexture(player_paths[PLAYER_ASSET_LEAN_RIGHT].c_str()));
-        current_texture = &textures[PLAYER_ASSET_DEFAULT];
+        bullet_spawner(bullet_fire_rate, bullet_sound_path, bullet_sound_volume) {
+
+        current_texture = AssetManager::GetInstance().GetTexture(TextureID::PLAYER_STRAIGHT);
     }
 
     void Player::Draw() const
@@ -29,11 +27,11 @@ namespace bts
 
         bullet_spawner.Draw();
 
-        int center_x = static_cast<int>(position.x - (float)current_texture->width / 2);
-        int center_y = static_cast<int>(position.y - (float)current_texture->height / 2);
+        int center_x = static_cast<int>(position.x - (float)current_texture.width / 2);
+        int center_y = static_cast<int>(position.y - (float)current_texture.height / 2);
 
-        DrawTexture(*current_texture, center_x + SHADOW_OFFSET_X, center_y + SHADOW_OFFSET_Y, Fade(BLACK, SHADOW_ALPHA));
-        DrawTexture(*current_texture, center_x, center_y, WHITE);
+        DrawTexture(current_texture, center_x + SHADOW_OFFSET_X, center_y + SHADOW_OFFSET_Y, Fade(BLACK, SHADOW_ALPHA));
+        DrawTexture(current_texture, center_x, center_y, WHITE);
         //DrawCircleLines(static_cast<int>(position.x), static_cast<int>(position.y), hitbox.data.radius, player_color);
     }
 
@@ -54,17 +52,13 @@ namespace bts
         bullet_spawner.Update(dt);
     }
     void Player::UnLoad() {
-        for (auto& tex : textures) {
-            UnloadTexture(tex);
-        }
-
         bullet_spawner.UnLoad();
     }
 
 
     void Player::HandleMovement(float dt)
     {
-        current_texture = &textures[PLAYER_ASSET_DEFAULT];
+        current_texture = AssetManager::GetInstance().GetTexture(TextureID::PLAYER_STRAIGHT);
 
         Vector2 direction = { 0 };
         if (IsKeyDown(KEY_W)) {
@@ -76,11 +70,11 @@ namespace bts
 
         if (IsKeyDown(KEY_A)) {
             direction.x = -1;
-            current_texture = &textures[PLAYER_ASSET_LEAN_LEFT];
+            current_texture = AssetManager::GetInstance().GetTexture(TextureID::PLAYER_LEFT);
         }
         else if (IsKeyDown(KEY_D)) {
             direction.x = 1;
-            current_texture = &textures[PLAYER_ASSET_LEAN_RIGHT];
+            current_texture = AssetManager::GetInstance().GetTexture(TextureID::PLAYER_RIGHT);
 
         }
 

@@ -35,15 +35,17 @@ int main()
     io.Fonts->AddFontFromFileTTF(ASSETS_PATH"fonts/Pixel Game.otf", FONT_SIZE_SM);
     io.Fonts->Build();
 
+    bts::AssetManager::GetInstance().LoadTextures(ASSETS_PATH"data/textures.json");
+
     Music music_background = LoadMusicStream(ASSETS_PATH"music/background/Raining Bits.ogg");
     Sound sfx_explosion = LoadSound(ASSETS_PATH"music/sfx/Explosion3.wav");
 
     SetMusicVolume(music_background, BACKGROUND_MUSIC_VOLUME);
     PlayMusicStream(music_background);
 
-    bts::Player player(PLAYER_ASSETS, ASSETS_PATH"graphics/bullet.png", ASSETS_PATH"music/sfx/LaserShot9.mp3", BULLET_SFX_VOLUME);
-    bts::EnemySpawner enemies(ASSETS_PATH"graphics/dog_plane.png");
-    bts::Background background(ASSETS_PATH"graphics/background.png");
+    bts::Player player(ASSETS_PATH"music/sfx/LaserShot9.mp3", BULLET_SFX_VOLUME);
+    bts::EnemySpawner enemies(ASSETS_PATH"music/sfx/ToneLoop2.wav", ENEMY_SFX_VOLUME);
+    bts::Background background;
     bts::Timer level_timer(LEVEL_LENGTH);
     int wave_count = 1;
 
@@ -172,6 +174,7 @@ int main()
 
     UnloadSound(sfx_explosion);
     UnloadMusicStream(music_background);
+    bts::AssetManager::GetInstance().UnloadTextures();
     UnloadImage(icon);
     CloseAudioDevice();
     rlImGuiShutdown();

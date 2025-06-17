@@ -7,9 +7,9 @@
 #include <vector>
 
 #include "constants.h"
+#include "asset_manager.h"
 #include "player.h"
 #include "enemy_spawner.h"
 #include "background.h"
-
 
 #include "ui_constants.h"

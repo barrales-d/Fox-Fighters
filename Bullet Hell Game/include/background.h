@@ -5,21 +5,21 @@
 #include <string>
 #include <raylib.h>
 
+#include "asset_manager.h"
 #include "game_object.h"
 
 namespace bts
 {
     class Background : public GameObject {
     public:
-        Background(const std::string& file_path);
+        Background();
 
         virtual void Draw() const override;
         virtual void Update(float dt) override;
-        virtual void UnLoad() override;
+        virtual void UnLoad() override {}
 
 
     private:
-        Texture2D texture;
     };
 }
 

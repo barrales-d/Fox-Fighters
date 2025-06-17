@@ -11,14 +11,9 @@ namespace bts
 {
     class EnemySpawner : public Spawner<Enemy> {
     public:
-        EnemySpawner(const std::string& file_path, const std::string& sound_path = std::string());
-        virtual void Draw() const override;
-
-        virtual void UnLoad() override;
+        EnemySpawner(const std::string& sound_path = std::string(), float sfx_volume = 1.0f);
     private:
         Vector2 CreateEnemySpawnPosition();
-
-        Texture2D texture;
     };
 }
 

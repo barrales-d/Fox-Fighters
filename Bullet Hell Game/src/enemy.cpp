@@ -23,7 +23,13 @@ namespace bts
 
     void Enemy::Draw() const {
         if (this->IsAlive()) {
-            DrawCircleLinesV(position, hitbox.data.radius, enemy_color);
+            //DrawCircleLinesV(position, hitbox.data.radius, enemy_color);
+            Texture2D texture = AssetManager::GetInstance().GetTexture(TextureID::ENEMY_STRAIGHT);
+            int center_x = static_cast<int>(position.x) - texture.width / 2;
+            int center_y = static_cast<int>(position.y) - texture.height / 2;
+
+            DrawTexture(texture, center_x + SHADOW_OFFSET_X, center_y + SHADOW_OFFSET_Y, Fade(BLACK, SHADOW_ALPHA));
+            DrawTexture(texture, center_x, center_y, WHITE);
         }
     }
 

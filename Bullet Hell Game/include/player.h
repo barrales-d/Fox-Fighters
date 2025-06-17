@@ -8,6 +8,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
+#include "asset_manager.h"
+
 #include "constants.h"
 #include "game_object.h"
 #include "event_timer.h"
@@ -16,7 +18,7 @@
 namespace bts {
     class Player : public GameObject {
     public:
-        Player(const std::string player_paths[PLAYER_ASSET_LENGTH], const std::string& bullet_path, const std::string& bullet_sound_path = std::string(), float bullet_sound_volume = 1.0f);
+        Player(const std::string& bullet_sound_path = std::string(), float bullet_sound_volume = 1.0f);
 
         virtual void Draw() const override;
         virtual void Update(float dt) override;
@@ -41,8 +43,7 @@ namespace bts {
         float bullet_gauge = 0.0f;
         static constexpr float bullet_gauge_limit = 2.0f;
 
-        std::vector<Texture2D> textures;
-        Texture2D* current_texture;
+        Texture2D current_texture;
 
     };
 }
