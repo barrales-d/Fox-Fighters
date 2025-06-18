@@ -11,41 +11,15 @@ namespace bts
 {
     static const TextureID TexIDFromString(const std::string& tex_str)
     {
-        if (tex_str == "BACKGROUND")
-        {
-            return TextureID::BACKGROUND;
-        }
-        else if (tex_str == "PLAYER_LEFT")
-        {
-            return TextureID::PLAYER_LEFT;
-        }
-        else if (tex_str == "PLAYER_STRAIGHT")
-        {
-            return TextureID::PLAYER_STRAIGHT;
-        }
-        else if (tex_str == "PLAYER_RIGHT")
-        {
-            return TextureID::PLAYER_RIGHT;
-        }
-        else if (tex_str == "PLAYER_BULLET")
-        {
-            return TextureID::PLAYER_BULLET;
-        }
-        else if (tex_str == "ENEMY_STRAIGHT")
-        {
-            return TextureID::ENEMY_STRAIGHT;
-        }
-        else if (tex_str == "ENEMY_RIGHT")
-        {
-            return TextureID::ENEMY_RIGHT;
-        }
-        else if (tex_str == "ENEMY_LEFT")
-        {
-            return TextureID::ENEMY_LEFT;
-        }
-        else {
-            throw std::runtime_error(R"(ERROR: Unknown TEXTURE ID: )" + tex_str);
-        }
+        if (tex_str == "BACKGROUND") { return TextureID::BACKGROUND; }
+        else if (tex_str == "PLAYER_LEFT") { return TextureID::PLAYER_LEFT; }
+        else if (tex_str == "PLAYER_STRAIGHT") { return TextureID::PLAYER_STRAIGHT; }
+        else if (tex_str == "PLAYER_RIGHT") { return TextureID::PLAYER_RIGHT; }
+        else if (tex_str == "PLAYER_BULLET") { return TextureID::PLAYER_BULLET; }
+        else if (tex_str == "ENEMY_STRAIGHT") { return TextureID::ENEMY_STRAIGHT; }
+        else if (tex_str == "ENEMY_RIGHT") { return TextureID::ENEMY_RIGHT; }
+        else if (tex_str == "ENEMY_LEFT") { return TextureID::ENEMY_LEFT; }
+        else { throw std::runtime_error(R"(ERROR: Unknown TEXTURE ID: )" + tex_str); }
     }
 
     AssetManager& bts::AssetManager::GetInstance()
