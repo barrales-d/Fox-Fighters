@@ -21,17 +21,17 @@ namespace bts
 
         // Pick a random direction [LEFT, STRAIGHT, RIGHT];
         velocity.x *= GetRandomValue(-1, 1);
+        current_texture = AssetManager::GetInstance().GetTexture(TextureID::ENEMY_STRAIGHT);
     }
 
     void Enemy::Draw() const {
         if (this->IsAlive()) {
             //DrawCircleLinesV(position, hitbox.data.radius, enemy_color);
-            Texture2D texture = AssetManager::GetInstance().GetTexture(TextureID::ENEMY_STRAIGHT);
-            int center_x = static_cast<int>(position.x) - texture.width / 2;
-            int center_y = static_cast<int>(position.y) - texture.height / 2;
+            int center_x = static_cast<int>(position.x) - current_texture.width / 2;
+            int center_y = static_cast<int>(position.y) - current_texture.height / 2;
 
-            DrawTexture(texture, center_x + SHADOW_OFFSET_X, center_y + SHADOW_OFFSET_Y, Fade(BLACK, SHADOW_ALPHA));
-            DrawTexture(texture, center_x, center_y, WHITE);
+            DrawTexture(current_texture, center_x + SHADOW_OFFSET_X, center_y + SHADOW_OFFSET_Y, Fade(BLACK, SHADOW_ALPHA));
+            DrawTexture(current_texture, center_x, center_y, WHITE);
         }
     }
 
@@ -42,6 +42,16 @@ namespace bts
                 velocity.x *= GetRandomValue(-1, 1);
             }
             switch_dir.Update(dt);
+
+            if (velocity.x < 0) {
+                current_texture = AssetManager::GetInstance().GetTexture(TextureID::ENEMY_LEFT);
+            }
+            else if (velocity.x > 0) {
+                current_texture = AssetManager::GetInstance().GetTexture(TextureID::ENEMY_RIGHT);
+            }
+            else {
+                current_texture = AssetManager::GetInstance().GetTexture(TextureID::ENEMY_STRAIGHT);
+            }
         }
 
         if (position.y >= HEIGHT + SPAWN_PADDING) {
@@ -49,10 +59,11 @@ namespace bts
         }
 
         if (position.x <= SPAWN_PADDING) {
-
+            current_texture = AssetManager::GetInstance().GetTexture(TextureID::ENEMY_STRAIGHT);
             position.x = SPAWN_PADDING;
         }
         else if (position.x >= WIDTH - SPAWN_PADDING) {
+            current_texture = AssetManager::GetInstance().GetTexture(TextureID::ENEMY_STRAIGHT);
             position.x = WIDTH - SPAWN_PADDING;
         }
     }

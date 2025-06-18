@@ -22,6 +22,7 @@ namespace bts
         virtual void UnLoad() override {}
     private:
         Timer switch_dir;
+        Texture2D current_texture;
     };
 }
 

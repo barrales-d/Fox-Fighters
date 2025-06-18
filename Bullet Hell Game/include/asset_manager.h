@@ -16,6 +16,8 @@ namespace bts
 		PLAYER_RIGHT,
 		PLAYER_BULLET,
 		ENEMY_STRAIGHT,
+		ENEMY_RIGHT,
+		ENEMY_LEFT,
 
 		COUNT,
 	};
