@@ -14,8 +14,8 @@ namespace bts
 {
     class Enemy : public GameObject {
     public:
-        Enemy() : GameObject(), switch_dir(0.0f) {}
-        Enemy(Vector2 start_position);
+        //Enemy() : GameObject(), switch_dir(0.0f) {}
+        Enemy(Vector2 start_position, Vector2 start_velocity);
 
         virtual void Draw() const override;
         virtual void Update(float dt) override;

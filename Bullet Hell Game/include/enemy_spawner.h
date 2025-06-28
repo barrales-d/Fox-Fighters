@@ -13,7 +13,7 @@ namespace bts
     public:
         EnemySpawner(const std::string& sound_path = std::string(), float sfx_volume = 1.0f);
     private:
-        Vector2 CreateEnemySpawnPosition();
+        SpawnSettings CreateEnemySpawnSettings();
     };
 }
 

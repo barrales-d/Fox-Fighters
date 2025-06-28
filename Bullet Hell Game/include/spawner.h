@@ -13,12 +13,20 @@
 
 namespace bts
 {
+    struct SpawnSettings {
+        Vector2 position = { 0 };
+        Vector2 velocity = { 0 };
+
+        SpawnSettings() = default;
+        SpawnSettings(Vector2 pos, Vector2 vel) : position(pos), velocity(vel) { }
+
+    };
     template<class T>
     class Spawner : public ITimerListener {
     public:
-        using SpawnFunc = std::function<Vector2()>;
-        Spawner(SpawnFunc spawnFunc, float spawn_interval, const std::string& sound_path = std::string(), float sound_volume = 1.0f) :
-            get_spawn_postion(spawnFunc), spawn_timer(spawn_interval, this) {
+        using SpawnFunc = std::function<SpawnSettings()>;
+        Spawner(SpawnFunc spawn_func, float spawn_interval, const std::string& sound_path = std::string(), float sound_volume = 1.0f) :
+            get_spawn_settings(spawn_func), spawn_timer(spawn_interval, this) {
             if (!sound_path.empty()) {
                 sfx_spawn_sound = LoadSound(sound_path.c_str());
                 SetSoundVolume(*sfx_spawn_sound, sound_volume);
@@ -50,7 +58,7 @@ namespace bts
 
         const std::vector<T>& GetEntities() const { return entity_list; }
 
-        void SetSpawnFunction(SpawnFunc sf) { get_spawn_postion = sf; }
+        void SetSpawnFunction(SpawnFunc sf) { get_spawn_settings = sf; }
 
         void Start() { spawn_timer.Start(); }
         void Stop() { spawn_timer.Stop(); }
@@ -62,13 +70,14 @@ namespace bts
         std::vector<T> entity_list;
         EventTimer spawn_timer;
 
-        SpawnFunc get_spawn_postion;
+        SpawnFunc get_spawn_settings;
 
         std::optional<Sound> sfx_spawn_sound;
 
     protected:
         void CreateEntity() {
-            T entity(get_spawn_postion());
+            SpawnSettings ss = get_spawn_settings();
+            T entity(ss.position, ss.velocity);
 
             bool replaced_entity = false;
             for (auto& current_entity : entity_list) {

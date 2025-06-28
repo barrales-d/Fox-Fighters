@@ -2,12 +2,11 @@
 
 static constexpr Color bullet_color = { 100, 255, 200, 255 };
 
-static constexpr Vector2 default_velocity = { 0, 500 };
 static constexpr float hitbox_radius = 8.0f;
 
 namespace bts
 {
-    Bullet::Bullet(Vector2 start_position) : GameObject(start_position, default_velocity, Hitbox::CIRCLE, Hitbox::HBData(hitbox_radius)) {}
+    Bullet::Bullet(Vector2 start_position, Vector2 velocity) : GameObject(start_position, velocity, Hitbox::CIRCLE, Hitbox::HBData(hitbox_radius)) {}
 
     void Bullet::Draw() const
     {
@@ -23,7 +22,7 @@ namespace bts
 
     void Bullet::Update(float dt)
     {
-        position -= Vector2UnitY * velocity * dt;
+        position += Vector2UnitY * velocity * dt;
 
         if (position.y < -SPAWN_PADDING) {
             this->Kill();

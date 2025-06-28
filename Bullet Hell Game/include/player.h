@@ -13,6 +13,7 @@
 #include "constants.h"
 #include "game_object.h"
 #include "event_timer.h"
+#include "spawner.h"
 #include "bullet_spawner.h"
 
 namespace bts {
@@ -34,6 +35,7 @@ namespace bts {
         void HandleMovement(float dt);
         void FireBullet(float dt);
         void HandleCooldown(float dt);
+        SpawnSettings SpawnNextBullet();
 
     private:
         Timer cooldown_timer = Timer(0.5f);
@@ -44,6 +46,7 @@ namespace bts {
         static constexpr float bullet_gauge_limit = 2.0f;
 
         Texture2D current_texture;
+
 
     };
 }

@@ -2,7 +2,6 @@
 
 static constexpr Color enemy_color = { 255, 50, 50, 255 };
 
-static constexpr Vector2 default_velocity = { 300, 500 };
 static constexpr int min_speed_x_range = 250;
 static constexpr int max_speed_x_range = 350;
 static constexpr int min_speed_y_range = 550;
@@ -12,9 +11,10 @@ static constexpr float switch_interval = 0.4f;
 
 namespace bts
 {
-    Enemy::Enemy(Vector2 start_position)
-        : GameObject(start_position, default_velocity, Hitbox::CIRCLE, Hitbox::HBData(hitbox_radius)),
-        switch_dir(switch_interval) {
+    Enemy::Enemy(Vector2 start_position, Vector2 start_velocity)
+        : GameObject(start_position, start_velocity, Hitbox::CIRCLE, Hitbox::HBData(hitbox_radius)),
+        switch_dir(switch_interval)
+    {
         // Calculate the random speed of the Enemy
         velocity.x = static_cast<float>(GetRandomValue(min_speed_x_range, max_speed_x_range));
         velocity.y = static_cast<float>(GetRandomValue(min_speed_y_range, max_speed_y_range));
@@ -24,7 +24,7 @@ namespace bts
         current_texture = AssetManager::GetInstance().GetTexture(TextureID::ENEMY_STRAIGHT);
     }
 
-    void Enemy::Draw() const {
+        void Enemy::Draw() const {
         if (this->IsAlive()) {
             //DrawCircleLinesV(position, hitbox.data.radius, enemy_color);
             int center_x = static_cast<int>(position.x) - current_texture.width / 2;
@@ -32,6 +32,7 @@ namespace bts
 
             DrawTexture(current_texture, center_x + SHADOW_OFFSET_X, center_y + SHADOW_OFFSET_Y, Fade(BLACK, SHADOW_ALPHA));
             DrawTexture(current_texture, center_x, center_y, WHITE);
+
         }
     }
 

@@ -14,7 +14,7 @@ namespace bts
     class Bullet : public GameObject {
     public:
         Bullet() : GameObject() {}
-        Bullet(Vector2 start_position);
+        Bullet(Vector2 start_position, Vector2 velocity);
 
         virtual void Draw() const override;
         virtual void Update(float dt) override;

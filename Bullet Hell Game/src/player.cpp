@@ -4,6 +4,7 @@ static constexpr Color player_color = { 255, 50, 50, 255 };
 
 static constexpr Vector2 start_position = { WIDTH / 2, HEIGHT - (HEIGHT / 3) };
 static constexpr Vector2 start_velocity = { 350, 350 };
+static constexpr Vector2 bullet_velocity = { 0, -500 };
 static constexpr float hitbox_radius = 25;
 static constexpr float bullet_fire_rate = 0.05f;
 
@@ -15,7 +16,7 @@ namespace bts
 {
     Player::Player(const std::string& bullet_sound_path, float bullet_sound_volume) :
         GameObject(start_position, start_velocity, Hitbox::CIRCLE, Hitbox::HBData(hitbox_radius)),
-        bullet_spawner(bullet_fire_rate, bullet_sound_path, bullet_sound_volume) {
+        bullet_spawner([&]() { return SpawnNextBullet(); }, bullet_fire_rate, bullet_sound_path, bullet_sound_volume) {
 
         current_texture = AssetManager::GetInstance().GetTexture(TextureID::PLAYER_STRAIGHT);
     }
@@ -96,7 +97,6 @@ namespace bts
 
         if (bullet_gauge < bullet_gauge_limit && IsKeyDown(KEY_SPACE)) {
             // Player can shoot
-            bullet_spawner.SetSpawnFunction([this]() { return GetPosition(); });
             bullet_spawner.Start();
             bullet_gauge += dt;
         }
@@ -117,5 +117,10 @@ namespace bts
         }
 
         cooldown_timer.Update(dt);
+    }
+
+    SpawnSettings Player::SpawnNextBullet()
+    {
+        return SpawnSettings(GetPosition(), bullet_velocity);
     }
 }
